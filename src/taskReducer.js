@@ -14,7 +14,17 @@ const taskReducer = (state = initailState, action) => {
   console.log("PAYLOAD:: ", action.payload);
   switch (action.type) {
     case ADD_TASK:
-      return { ...state, tasks: [...state.tasks, action.payload] };
+      return {
+        ...state,
+        tasks: [
+          ...state.tasks,
+          {
+            id: action.payload.id,
+            task: action.payload.task,
+            isCompleted: action.payload.isCompleted,
+          },
+        ],
+      };
 
     case REMOVE_TASK:
       //action.payload here in this switch case will be the id sent to delete the task
@@ -28,7 +38,7 @@ const taskReducer = (state = initailState, action) => {
         ...state,
         tasks: state.tasks.map((task) =>
           task.id === action.payload
-            ? { ...task, completed: !task.completed } // true becomes false, false becomes true
+            ? { ...task, isCompleted: !task.isCompleted } // true becomes false, false becomes true
             : task
         ),
       };
